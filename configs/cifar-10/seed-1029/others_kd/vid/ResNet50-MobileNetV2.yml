@@ -1,0 +1,42 @@
+dataset:
+    name: cifar-10
+    root: /home/zhfeing/datasets/cifar
+    img_w: 32
+    img_h: 32
+
+training:
+    optimizer:
+        name: SGD
+        lr: 0.01
+        weight_decay: 5.0e-4
+        momentum: 0.9
+
+    lr_decay_epochs: [150, 180, 210]
+    lr_decay_rate: 0.1
+    batch_size: 64
+    num_workers: 8
+    epochs: 240
+    seed: 1029
+    save_ep_freq: 1
+    print_iter_freq: 10
+
+validation:
+    batch_size: 128
+    num_workers: 8
+
+kd:
+    student:
+        name: MobileNetV2
+    teacher:
+        name: ResNet50
+        checkpoint: run/cifar-10/seed-1029/valina/train_ResNet50/ckpt/epoch_240.pth
+    loss_weights:
+        classify_weight: 1
+        kd_weight: 0
+        other_loss_weight: 1.0
+
+kd_loss:
+    KD_T: 4.0
+
+    name: VIDLoss
+    
